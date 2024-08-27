@@ -1,9 +1,10 @@
+import BoxHead from "../../components/BoxHead";
 
 
 function Topics(props) {
     return (
         <div>
-            <h1>Trang chu de bai hat</h1>
+            <BoxHead title="chu de"/>
         </div>
     );
 }
