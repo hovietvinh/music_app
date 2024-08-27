@@ -1,4 +1,5 @@
 import Default from "../client/layouts/Default";
+import Songs from "../client/pages/songs";
 import Topics from "../client/pages/topics";
 
 export const routes = [
@@ -7,8 +8,12 @@ export const routes = [
         element:<Default/>,
         children:[
             {
-                path:"/",
+                path:"/topics",
                 element:<Topics/>
+            },
+            {
+                path:"/songs/:slugTopic",
+                element:<Songs/>
             }
         ]
     }
