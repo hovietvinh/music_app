@@ -14,6 +14,24 @@ const getTopicsApi = async()=>{
     }
 }
 
+const getSongsInTopicApi = async(slugTopic)=>{
+    try {
+        const URL_LOGIN =`/api/songs/${slugTopic}`
+        
+        const response = await axios.get(URL_LOGIN)
+       
+        return response
+        
+        
+    } catch (error) {
+        return {
+            code:400,
+            message:"Truy cập database API thất bại "
+        }
+    }
+}
+
 export {
-    getTopicsApi
+    getTopicsApi,
+    getSongsInTopicApi
 }

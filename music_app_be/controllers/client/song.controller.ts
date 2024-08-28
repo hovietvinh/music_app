@@ -7,6 +7,7 @@ import Singer from "../../models/singer.model";
 
 //[GET] /api/songs/:slugTopic
 export const list = async(req: Request,res: Response)=>{
+  
     try{
         const {slugTopic} = req.params
         const topic = await Topic.findOne({
@@ -15,28 +16,49 @@ export const list = async(req: Request,res: Response)=>{
             status:"active"
         })
 
-        const songs = await Song.find({
-            deleted:false,
-            topicId:topic._id,
-            status:"active"
-        })
-
-        for (const song of songs){
-            const infoSinger = await Singer.findOne({
+        if(topic){
+            const songs:any = await Song.find({
                 deleted:false,
-                status:"active",
-                _id: song.singerId
-            })
+                topicId:topic._id,
+                status:"active"
+            }).select("-lyrics").lean();
+         
+            for (const song of songs){
+                const infoSinger = await Singer.findOne({
+                    deleted:false,
+                    status:"active",
+                    _id: song.singerId
+                }).lean();
+                
+               
+                song["infoSinger"]=infoSinger
 
-            song["infoSinger"] = infoSinger
+                
+                        
+            }
+            
+    
+            
+          
+            
+            
+            res.json({
+                code:200,
+                data:songs,
+                topic:topic 
+            })
+        }
+        else{
+            res.json({
+                code:200,
+                data:[],
+                topic:"" 
+            })
         }
         
 
-        res.json({
-            code:200,
-            data:songs,
-            topic:topic 
-        })
+
+        
     }catch(e){
         res.json({
             code:400,

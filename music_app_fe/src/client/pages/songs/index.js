@@ -1,144 +1,45 @@
 import { useParams } from 'react-router-dom';
 import BoxHead from "../../components/BoxHead";
-import { Link } from 'react-router-dom';
-import {LikeOutlined,AudioOutlined,ClockCircleOutlined } from "@ant-design/icons"
+
+import SongReducer from '../../../redux/reducers/SongReducers';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSongsInTopicAction } from '../../../redux/actions/SongAction';
+import SongItem from '../../components/SongItem';
+import { Empty } from 'antd';
 function Songs() {
     const { slugTopic } = useParams();
-    console.log(slugTopic);
+    const dispatch = useDispatch()
+    const songs = useSelector(state=> state.SongReducer)
+    
+ 
+    useEffect(()=>{
+        const fetchApi = ()=>{
+             dispatch(getSongsInTopicAction(slugTopic))
+         
+        }
+        fetchApi();
+    },[slugTopic,dispatch])
+
     return (
         <>
             <div className="container max-w-[80%] mx-auto">
-                <BoxHead title="Danh sách bài hát"/>
+                <BoxHead title={songs.topic.title?`${songs.topic.title}`:`${slugTopic}`}/>
                 <div className="grid grid-cols-4 gap-4">
 
-                <div className="flex box-item bg-white border border-gray-300 rounded-md">
-                        <div className='w-[135px] aspect-w-1 aspect-h-1 rounded-md overflow-hidden'>
-                            <Link to={`songs/detail/:slugSong`}>
-                                <img className='w-[100%] h-[100%] object-cover' src="https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg"></img>
-                            </Link>
-                        </div>
-                        <div className='p-[10px] flex-1'>
-                            <div className='whitespace-pre-wrap overflow-hidden truncate mb-[7px] pb-[5px] line-clamp-1'>
-                                <Link className='font-medium text-[17px] hover:text-[#7c00c8] hover:no-underline' to={`songs/detail/:slugSong`}>
-                                    Cắt đôi nổi sầu
-                                </Link>
-                            </div>
-                            <div className='text-[13px] font-medium text-[#282828] pb-[3px] mb-[2px]'>
-                                <AudioOutlined /> Tăng Duy Tân
-                            </div>
-                            <div className='text-[13px] font-medium text-[#004cd0] pb-[3px] mb-[2px]'>
-                                <LikeOutlined /> 1000
-                            </div>
-                            <div className='text-[13px] font-medium text-[#585858]'>
-                                <ClockCircleOutlined /> Hôm nay
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className="flex box-item bg-white border border-gray-300 rounded-md">
-                        <div className='w-[135px] aspect-w-1 aspect-h-1 rounded-md overflow-hidden'>
-                            <Link to={`songs/detail/:slugSong`}>
-                                <img className='w-[100%] h-[100%] object-cover' src="https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg"></img>
-                            </Link>
-                        </div>
-                        <div className='p-[10px] flex-1'>
-                            <div className='whitespace-pre-wrap overflow-hidden truncate mb-[7px] pb-[5px] line-clamp-1'>
-                                <Link className='font-medium text-[17px] hover:text-[#7c00c8] hover:no-underline' to={`songs/detail/:slugSong`}>
-                                    Cắt đôi nổi sầu
-                                </Link>
-                            </div>
-                            <div className='text-[13px] font-medium text-[#282828] pb-[3px] mb-[2px]'>
-                                <AudioOutlined /> Tăng Duy Tân
-                            </div>
-                            <div className='text-[13px] font-medium text-[#004cd0] pb-[3px] mb-[2px]'>
-                                <LikeOutlined /> 1000
-                            </div>
-                            <div className='text-[13px] font-medium text-[#585858]'>
-                                <ClockCircleOutlined /> Hôm nay
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className="flex box-item bg-white border border-gray-300 rounded-md">
-                        <div className='w-[135px] aspect-w-1 aspect-h-1 rounded-md overflow-hidden'>
-                            <Link to={`songs/detail/:slugSong`}>
-                                <img className='w-[100%] h-[100%] object-cover' src="https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg"></img>
-                            </Link>
-                        </div>
-                        <div className='p-[10px] flex-1'>
-                            <div className='whitespace-pre-wrap overflow-hidden truncate mb-[7px] pb-[5px] line-clamp-1'>
-                                <Link className='font-medium text-[17px] hover:text-[#7c00c8] hover:no-underline' to={`songs/detail/:slugSong`}>
-                                    Cắt đôi nổi sầu
-                                </Link>
-                            </div>
-                            <div className='text-[13px] font-medium text-[#282828] pb-[3px] mb-[2px]'>
-                                <AudioOutlined /> Tăng Duy Tân
-                            </div>
-                            <div className='text-[13px] font-medium text-[#004cd0] pb-[3px] mb-[2px]'>
-                                <LikeOutlined /> 1000
-                            </div>
-                            <div className='text-[13px] font-medium text-[#585858]'>
-                                <ClockCircleOutlined /> Hôm nay
-                            </div>
-
-                        </div>
-                    </div>
+                    {songs.songs.length>0 ? (
+                        songs.songs.map((song,index)=>(
+                            <SongItem key={index} song={song} />
+                        ))
+                    ):
+                    (
+                       <div className='col-span-4 flex justify-center'>
+                            <Empty/>
+                       </div>
+                    )
+                    }
 
                     
-
-                   
-
-                    <div className="flex box-item bg-white border border-gray-300 rounded-md">
-                        <div className='w-[135px] aspect-w-1 aspect-h-1 rounded-md overflow-hidden'>
-                            <Link to={`songs/detail/:slugSong`}>
-                                <img className='w-[100%] h-[100%] object-cover' src="https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg"></img>
-                            </Link>
-                        </div>
-                        <div className='p-[10px] flex-1'>
-                            <div className='whitespace-pre-wrap overflow-hidden truncate mb-[7px] pb-[5px] line-clamp-1'>
-                                <Link className='font-medium text-[17px] hover:text-[#7c00c8] hover:no-underline' to={`songs/detail/:slugSong`}>
-                                    Cắt đôi nổi sầu
-                                </Link>
-                            </div>
-                            <div className='text-[13px] font-medium text-[#282828] pb-[3px] mb-[2px]'>
-                                <AudioOutlined /> Tăng Duy Tân
-                            </div>
-                            <div className='text-[13px] font-medium text-[#004cd0] pb-[3px] mb-[2px]'>
-                                <LikeOutlined /> 1000
-                            </div>
-                            <div className='text-[13px] font-medium text-[#585858]'>
-                                <ClockCircleOutlined /> Hôm nay
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className="flex box-item bg-white border border-gray-300 rounded-md">
-                        <div className='w-[135px] aspect-w-1 aspect-h-1 rounded-md overflow-hidden'>
-                            <Link to={`songs/detail/:slugSong`}>
-                                <img className='w-[100%] h-[100%] object-cover' src="https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg"></img>
-                            </Link>
-                        </div>
-                        <div className='p-[10px] flex-1'>
-                            <div className='whitespace-pre-wrap overflow-hidden truncate mb-[7px] pb-[5px] line-clamp-1'>
-                                <Link className='font-medium text-[17px] hover:text-[#7c00c8] hover:no-underline' to={`songs/detail/:slugSong`}>
-                                    Cắt đôi nổi sầu
-                                </Link>
-                            </div>
-                            <div className='text-[13px] font-medium text-[#282828] pb-[3px] mb-[2px]'>
-                                <AudioOutlined /> Tăng Duy Tân
-                            </div>
-                            <div className='text-[13px] font-medium text-[#004cd0] pb-[3px] mb-[2px]'>
-                                <LikeOutlined /> 1000
-                            </div>
-                            <div className='text-[13px] font-medium text-[#585858]'>
-                                <ClockCircleOutlined /> Hôm nay
-                            </div>
-
-                        </div>
-                    </div>
 
                 </div>
 
