@@ -1,6 +1,6 @@
 
 import { notification } from 'antd';
-import { getSongsInTopicApi } from '../../utils/api';
+import { getSongsInTopicApi, getSongDetailApi } from '../../utils/api';
 export const getSongsInTopicAction = (slugTopic)=>{
     return async(dispatch)=>{
         try {
@@ -21,6 +21,36 @@ export const getSongsInTopicAction = (slugTopic)=>{
                     description: data.message
                 })
             }
+        } catch (error) {
+            notification.error({
+                message:"Truy cập dữ liệu thất bại error action",
+                description: error.message
+            })
+        }
+    }
+}
+
+export const getSongDetailAction = (slugSong)=>{
+    return async(dispatch)=>{
+        try {
+            const data = await getSongDetailApi(slugSong);
+
+      
+            if(data.code==200){
+              
+                dispatch({
+                    type:"GET_SONG_DETAIL",
+                    data:data.data,
+                })
+            }
+            else{
+                
+                notification.error({
+                    message:"Truy cập dữ liệu thất bại action",
+                    description: data.message
+                })
+            }
+
         } catch (error) {
             notification.error({
                 message:"Truy cập dữ liệu thất bại error action",

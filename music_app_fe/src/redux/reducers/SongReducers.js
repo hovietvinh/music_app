@@ -1,19 +1,25 @@
+const initialState = {
+    songs: [],
+    topic: ""
+};
 
-const initialState ={
-    songs:[],
-    topic:""
-}
-const SongReducer = (state=initialState,action)=>{
-    switch(action.type){
+const SongReducer = (state = initialState, action) => {
+    switch (action.type) {
         case "GET_SONGS_IN_TOPIC":
-          
-            state.songs = action.data
-            state.topic = action.topic
-            // state = action.data
-            return {...state}
-        
+            return {
+                ...state,
+                songs: action.data,
+                topic: action.topic
+            };
+        case "GET_SONG_DETAIL":
+            return {
+                ...state,
+                songs: [action.data],
+                topic: action.data.infoTopic.title
+            };
+        default:
+            return state;
     }
-    return state
-}
+};
 
-export default SongReducer
+export default SongReducer;

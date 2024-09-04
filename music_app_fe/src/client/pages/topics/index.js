@@ -17,7 +17,6 @@ function Topics() {
         fetchApi()
     },[dispatch])
 
-    console.log(topics.length>0);
 
     return (
         

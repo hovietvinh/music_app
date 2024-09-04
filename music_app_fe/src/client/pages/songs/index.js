@@ -1,7 +1,5 @@
 import { useParams } from 'react-router-dom';
 import BoxHead from "../../components/BoxHead";
-
-import SongReducer from '../../../redux/reducers/SongReducers';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSongsInTopicAction } from '../../../redux/actions/SongAction';

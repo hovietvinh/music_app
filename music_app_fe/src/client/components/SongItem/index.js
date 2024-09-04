@@ -18,7 +18,7 @@ function SongItem(props) {
                         </Link>
                     </div>
                     <div className='text-[13px] font-medium text-[#282828] pb-[3px] mb-[2px]'>
-                        <AudioOutlined /> {song.infoSinger.fullName}
+                        <AudioOutlined /> {song.infoSinger? `${song.infoSinger.fullName}`:`null`}
                     </div>
                     <div className='text-[13px] font-medium text-[#004cd0] pb-[3px] mb-[2px]'>
                         <LikeOutlined /> {song.like}
