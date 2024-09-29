@@ -1,4 +1,5 @@
 import Default from "../client/layouts/Default";
+import Login from "../client/pages/login";
 import Songs from "../client/pages/songs";
 import DetailSong from "../client/pages/songs/detail";
 import Topics from "../client/pages/topics";
@@ -21,5 +22,9 @@ export const routes = [
                 element:<DetailSong/>
             }
         ]
+    },
+    {
+        path:"/user/login",
+        element:<Login/>
     }
 ];

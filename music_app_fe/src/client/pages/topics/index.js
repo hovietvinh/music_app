@@ -8,7 +8,7 @@ import TopicItem from "../../components/TopicItem";
 
 function Topics() {
     const dispatch = useDispatch()
-    let topics = useSelector(state=>state.TopicReducer)
+    let stateTopic = useSelector(state=>state.TopicReducer)
 
     useEffect(()=>{
         const fetchApi = ()=>{
@@ -24,8 +24,8 @@ function Topics() {
             <div className="container max-w-[80%] mx-auto">
                 <BoxHead title="chu de"/>
                 <div className="grid grid-cols-4 gap-4">
-                    {topics.length>0 ?(
-                        topics.map((topic,index)=>(
+                    {stateTopic.topics &&stateTopic.topics.length>0 ?(
+                        stateTopic.topics.map((topic,index)=>(
                            <TopicItem topic={topic} key={index}/>
                         ))
                     ):

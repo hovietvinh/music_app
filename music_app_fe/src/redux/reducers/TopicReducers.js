@@ -1,9 +1,16 @@
-const TopicReducer = (state=[],action)=>{
+let initialState = {
+    topics:[]
+}
+
+const TopicReducer = (state=initialState,action)=>{
     switch(action.type){
         case "GET_TOPICS":
-            state = action.data
+            
             // state = action.data
-            return state
+            return {
+                ...state,
+                topics: action.data
+            }
         
     }
     return state

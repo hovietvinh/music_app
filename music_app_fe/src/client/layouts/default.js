@@ -4,6 +4,9 @@ import Footer from "../components/Footer";
 
 
 function Default() {
+    // const navigate = use
+
+
     return (
         <>
             <Header/>

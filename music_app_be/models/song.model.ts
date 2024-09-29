@@ -6,7 +6,10 @@ const songScheme = new mongoose.Schema({
     description:String,
     singerId:String,
     topicId:String,
-    like:Number,
+    like: {
+        type: [String],  // Mảng chứa các chuỗi
+        default: [],     // Mặc định là một mảng rỗng
+    },
     lyris:String,
     audio:String,
     status:String,

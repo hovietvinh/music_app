@@ -2,6 +2,7 @@ import {Request , Response} from "express";
 import Topic from "../../models/topic.model";
 import Song from "../../models/song.model";
 import Singer from "../../models/singer.model";
+import User from "../../models/user.model";
 
 
 
@@ -104,7 +105,54 @@ export const detail =async (req: Request,res: Response) => {
     } catch (error) {
         res.json({
             code:400,
-            message:"Truy cập database thất bại"
+            message:"Lỗi ở BE"
+        })
+    }
+}
+
+//[GET] /api/songs/like/:typeLike/:idSong
+export const like = async (req:Request,res:Response)=>{
+    try {
+        const {typeLike,idSong} = req.params
+        const user = res.locals.user;
+        const newUser = await User.findOne({
+            email:user.email
+        })
+
+        const like = async()=>{
+
+            await Song.updateOne({_id:idSong},{
+                $addToSet: { like: newUser._id }
+            })
+        }
+
+        const dislike = async()=>{
+            await Song.updateOne(
+                { _id: idSong }, // Find the song by id
+                { $pull: { like: newUser._id } } // Remove the user ID from the array
+            );
+        }
+
+        switch (typeLike){
+            case "like":
+                await like()
+                break
+
+            case "dislike":
+                await dislike()
+                break
+        }
+            
+            
+
+
+        res.json({
+            code:200
+        })
+    } catch (error) {
+        res.json({
+            code:400,
+            message:"Lỗi ở BE"
         })
     }
 }

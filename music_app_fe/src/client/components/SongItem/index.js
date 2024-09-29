@@ -21,7 +21,7 @@ function SongItem(props) {
                         <AudioOutlined /> {song.infoSinger? `${song.infoSinger.fullName}`:`null`}
                     </div>
                     <div className='text-[13px] font-medium text-[#004cd0] pb-[3px] mb-[2px]'>
-                        <LikeOutlined /> {song.like}
+                        <LikeOutlined /> {song.like.length}
                     </div>
                     <div className='text-[13px] font-medium text-[#585858]'>
                         <ClockCircleOutlined /> Hôm nay
