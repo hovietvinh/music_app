@@ -100,7 +100,37 @@ const songLikeApi = async(typeLike,idSong)=>{
     try {
         const URL_LOGIN =`/api/songs/like/${typeLike}/${idSong}`
         
+        const response = await axios.patch(URL_LOGIN)
+        return response
+    } catch (error) {
+        return {
+            code:400,
+            message:"Thật bại ở axios"
+        }
+    }
+}
+
+const favoriteSongApi = async(typeFav,idSong)=>{
+    try {
+        const URL_LOGIN =`/api/songs/favorite/${typeFav}/${idSong}`
+        
+        const response = await axios.patch(URL_LOGIN)
+        // console.log(response);
+        return response
+    } catch (error) {
+        return {
+            code:400,
+            message:"Thật bại ở axios"
+        }
+    }
+}
+
+const getFavoriteSong = async()=>{
+    try {
+        const URL_LOGIN =`/api/songs/favorite/get`
+        
         const response = await axios.get(URL_LOGIN)
+        // console.log(response);
         return response
     } catch (error) {
         return {
@@ -117,5 +147,7 @@ export {
     registerUserApi,
     loginUserApi,
     checkUserApi,
-    songLikeApi
+    songLikeApi,
+    favoriteSongApi,
+    getFavoriteSong
 }

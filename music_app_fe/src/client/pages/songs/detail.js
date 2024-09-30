@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import "./detail.css";
-import { ClockCircleOutlined,LikeFilled, AudioFilled, CustomerServiceFilled, LikeOutlined, HeartOutlined } from "@ant-design/icons";
-import {songLikeApi} from "../../../utils/api"
+import { ClockCircleOutlined,LikeFilled,HeartFilled, AudioFilled, CustomerServiceFilled, LikeOutlined, HeartOutlined } from "@ant-design/icons";
+import {favoriteSongApi, getFavoriteSong, songLikeApi} from "../../../utils/api"
 import { useDispatch, useSelector } from 'react-redux';
 import { getSongDetailAction } from '../../../redux/actions/SongAction';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -59,40 +59,63 @@ function DetailSong() {
     const [load, setLoad] = useState(true);
     const stateUser = useSelector(state=>state.UserReducer)
     const [isLike,setIsLike] = useState()
+    const [favoriteSong,setFavoriteSong] = useState()
+    const [isFav,setIsFav] = useState(false)
     // console.log(stateUser);
     useEffect(() => {
-        dispatch(getSongDetailAction(slugSong));
-    }, [slugSong, dispatch,isLike]);
+
+        const fetch = async()=>{
+            dispatch(getSongDetailAction(slugSong));
+            if(stateUser.userInfo){
+                // console.log("here");
+                const res = await getFavoriteSong();
+                // console.log(res);
+                if(res.code==200 && res.data){
+                    setFavoriteSong(res.data.songsId)
+                    // const fav = res.data.songsId.find(item=>item==stateUser.userInfo._id)
+                }
+            }
+            
+        }
+
+        fetch()
+        
+
+    }, [slugSong, dispatch,isLike,isFav]);
 
     useEffect(() => {
         if (songs.length > 0) {
             setSong(songs[0]);
             setLoading(false);
-            const arrLike = songs[0].like
-            const like = arrLike.find(item=>item==stateUser.userInfo._id)
-            if(like){
-                setIsLike(true)
-            }
-            else{
-                setIsLike(false)
+            //check like
+            if( stateUser.userInfo){
+                const arrLike = songs[0].like
+                const like = arrLike.find(item=>item==stateUser.userInfo._id)
+                if(like){
+                    setIsLike(true)
+                }
+                else{
+                    setIsLike(false)
 
+                }
             }
+
+        
+            //check fav
+            if(favoriteSong){
+                const fav = favoriteSong.find(item=>item==songs[0]._id)
+                if(fav){
+                    setIsFav(true)
+                }
+                else{
+                    setIsFav(false)
+                }
+            }
+
         }
-    }, [songs]);
-
-    
-
-    // console.log(isLike);
-
-
-    console.log(song,isLike);
+    }, [songs,favoriteSong]);
 
     const changeLike = async()=>{
-
-
-
-
-
         if(stateUser.user_token){
             // console.log(isLike);
             // console.log(isLike);
@@ -117,6 +140,37 @@ function DetailSong() {
             // console.log("vaoday");
 
             // setShowNotification(true);
+            openNotification()
+        }
+    }
+    const changeFav = async()=>{
+        if(stateUser.user_token){
+         
+            if(isFav){
+                // console.log("unfavorite");
+                // console.log(isLike);
+                const res = await favoriteSongApi("unfavorite",song._id)
+                // console.log(res,"unfavorite");
+                setIsFav(false)
+                // setFavoriteSong(false)
+                // console.log(res);
+            }
+            else{
+            
+                const res = await favoriteSongApi("favorite",song._id)
+                // console.log(res,"favorite");
+
+                setIsFav(true)
+                // setFavoriteSong(true)
+                // console.log(res);
+            }
+
+            
+            // setLoad(!load)
+            
+            // console.log(isLike);
+        }
+        else{
             openNotification()
         }
     }
@@ -150,7 +204,7 @@ function DetailSong() {
                    
                         {/* <LikeFilled className=' text-blue-500' /> <span className='font-normal text-blue-600'>{JSON.stringify(song.like.length)} Thích</span> */}
                         {isLike?
-                        <><LikeFilled className=' text-blue-500' onClick={changeLike} /> <span className='font-normal text-blue-600'>{parseInt(JSON.stringify(song.like.length))} Thích</span> </>
+                        <><LikeFilled className=' text-blue-500' onClick={changeLike} /> <span className='font-normal text-blue-500'>{parseInt(JSON.stringify(song.like.length))} Thích</span> </>
                          :
                         <><LikeOutlined onClick={changeLike} className=' text-blue-900' /> <span className='font-normal text-gray-600'>{JSON.stringify(song.like.length)} Thích</span></>}
                         
@@ -158,7 +212,8 @@ function DetailSong() {
                 </div>
                 
                 <div>
-                    <HeartOutlined className='text-pink-700 pr-1' /> <span className='font-normal text-gray-600'>Bài hát yêu thích</span>
+                    {isFav?<><HeartFilled className='text-pink-500 pr-1' onClick={changeFav} /> <span className='font-semibold text-pink-500'>Bài hát yêu thích</span></>:<><HeartOutlined onClick={changeFav} className='text-pink-400 pr-1' /> <span className='font-normal text-pink-400'>Bài hát yêu thích</span></>}
+                    
                 </div>
 
                 <div className='flex gap-6 items-center'>

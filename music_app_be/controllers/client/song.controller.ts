@@ -3,6 +3,8 @@ import Topic from "../../models/topic.model";
 import Song from "../../models/song.model";
 import Singer from "../../models/singer.model";
 import User from "../../models/user.model";
+import FavoriteSong from "../../models/favorite-song.model";
+import { log } from "console";
 
 
 
@@ -110,7 +112,7 @@ export const detail =async (req: Request,res: Response) => {
     }
 }
 
-//[GET] /api/songs/like/:typeLike/:idSong
+//[PATCH] /api/songs/like/:typeLike/:idSong
 export const like = async (req:Request,res:Response)=>{
     try {
         const {typeLike,idSong} = req.params
@@ -149,6 +151,118 @@ export const like = async (req:Request,res:Response)=>{
         res.json({
             code:200
         })
+    } catch (error) {
+        res.json({
+            code:400,
+            message:"Lỗi ở BE"
+        })
+    }
+}
+
+
+//[PATCH] /api/songs/favorite/:typeFavorite/:idSong
+export const favorite = async (req:Request,res:Response)=>{
+    try {
+        // console.log("here");
+        
+        const {typeFavorite,idSong} = req.params
+        const user = res.locals.user;
+        const newUser = await User.findOne({
+            email:user.email
+        })
+
+        const fav = async()=>{
+            // console.log("favorite");
+
+            const favSong = await FavoriteSong.findOne({
+                deleted:false,
+                userId:newUser._id
+            })
+            if(favSong){
+                await FavoriteSong.updateOne({userId:newUser._id},{
+                    $addToSet: {songsId:idSong}
+                })
+            }
+            else{
+                const obj = {
+                    userId:newUser._id,
+                    songsId:[idSong]
+                }
+                const newFavSong = new FavoriteSong(obj)
+                await newFavSong.save()
+            }
+
+            
+        }
+
+        const unfav = async()=>{
+            // console.log("unfavorite",idSong);
+            await FavoriteSong.updateOne(
+                { userId: newUser._id }, 
+                { $pull: { songsId: idSong } } 
+            );
+            
+            
+        }
+
+        switch (typeFavorite){
+            case "favorite":
+                await fav()
+                break
+
+            case "unfavorite":
+                await unfav()
+                break
+        }
+            
+    
+        
+            
+
+
+        res.json({
+            code:200
+        })
+    } catch (error) {
+        res.json({
+            code:400,
+            message:"Lỗi ở BE"
+        })
+    }
+}
+
+
+//[GET] /api/songs/favorite
+export const getFavorite = async (req:Request,res:Response)=>{
+    try {
+        // console.log(123);
+        
+        const user = res.locals.user;
+        const newUser = await User.findOne({
+            email:user.email
+        })
+
+        const fav = await FavoriteSong.findOne({
+            userId:newUser._id
+        })
+        // console.log(fav);
+        
+
+        if(fav){
+            return res.json({
+                code:200,
+                data:fav
+            })
+        }
+        else{
+            return res.json({
+                code:200,
+                data:{},
+                // message:"Khong tim thay"
+            })
+        }
+        
+
     } catch (error) {
         res.json({
             code:400,
