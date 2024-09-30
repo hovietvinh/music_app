@@ -127,7 +127,7 @@ const favoriteSongApi = async(typeFav,idSong)=>{
 
 const getFavoriteSong = async()=>{
     try {
-        const URL_LOGIN =`/api/songs/favorite/get`
+        const URL_LOGIN =`/api/favorite-songs`
         
         const response = await axios.get(URL_LOGIN)
         // console.log(response);

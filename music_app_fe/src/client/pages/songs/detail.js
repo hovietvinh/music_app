@@ -212,7 +212,7 @@ function DetailSong() {
                 </div>
                 
                 <div>
-                    {isFav?<><HeartFilled className='text-pink-500 pr-1' onClick={changeFav} /> <span className='font-semibold text-pink-500'>Bài hát yêu thích</span></>:<><HeartOutlined onClick={changeFav} className='text-pink-400 pr-1' /> <span className='font-normal text-pink-400'>Bài hát yêu thích</span></>}
+                    {isFav?<><HeartFilled className='text-pink-500 pr-1' onClick={changeFav} /> <span onClick={changeFav} className='font-semibold text-pink-500 cursor-pointer'>Bài hát yêu thích</span></>:<><HeartOutlined onClick={changeFav} className='text-pink-400 pr-1' /> <span onClick={changeFav} className='cursor-pointer font-normal text-pink-400'>Thêm vào danh sách bài hát yêu thích</span></>}
                     
                 </div>
 
