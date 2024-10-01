@@ -10,6 +10,10 @@ const songScheme = new mongoose.Schema({
         type: [String],  // Mảng chứa các chuỗi
         default: [],     // Mặc định là một mảng rỗng
     },
+    listen:{
+        type:Number,
+        default:0
+    },
     lyris:String,
     audio:String,
     status:String,

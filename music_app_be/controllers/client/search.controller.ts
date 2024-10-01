@@ -41,6 +41,7 @@ export const result = async(req: Request,res: Response)=>{
                     audio:item.audio,
                     status:item.status,
                     slug:item.slug,
+                    listen:item.listen
                 };
                 
      

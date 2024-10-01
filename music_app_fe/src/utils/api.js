@@ -155,6 +155,21 @@ const getSearchResult = async(keyword)=>{
     }
 }
 
+const listenSongApi = async(id)=>{
+    try {
+        const URL_LOGIN =`/api/songs/listen/${id}`
+        
+        const response = await axios.patch(URL_LOGIN)
+        // console.log(response);
+        return response
+    } catch (error) {
+        return {
+            code:400,
+            message:"Thật bại ở axios"
+        }
+    }
+}
+
 export {
     getTopicsApi,
     getSongsInTopicApi,
@@ -165,5 +180,6 @@ export {
     songLikeApi,
     favoriteSongApi,
     getFavoriteSong,
-    getSearchResult
+    getSearchResult,
+    listenSongApi
 }

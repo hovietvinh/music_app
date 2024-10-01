@@ -4,7 +4,6 @@ import Song from "../../models/song.model";
 import Singer from "../../models/singer.model";
 import User from "../../models/user.model";
 import FavoriteSong from "../../models/favorite-song.model";
-import { log } from "console";
 
 
 
@@ -233,3 +232,27 @@ export const favorite = async (req:Request,res:Response)=>{
 
 
 
+//[PATCH]/api/songs/listen/:idSong
+export const listen =async (req:Request,res:Response)=>{
+    try {
+        const idSong:string = req.params.idSong;
+        let listen =  (await Song.findOne({_id:idSong})).listen ||0
+        listen+=1
+        await Song.updateOne({_id:idSong},{
+            listen:listen
+        })
+
+        const newSong = await Song.findOne({_id:idSong})
+
+        res.json({
+            code:200,
+            listen:newSong.listen
+        })
+
+    } catch (error) {
+        res.json({
+            code:400,
+            message:"Lỗi ở BE"
+        })
+    }
+}

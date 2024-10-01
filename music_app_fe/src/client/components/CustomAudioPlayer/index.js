@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute, FaForward, FaBackward } from 'react-icons/fa';
+import { listenSongApi } from '../../../utils/api';
 import { formatTime } from '../Utils/utils'; // Utility function to format time
 
-const CustomAudioPlayer = ({ src }) => {
+const CustomAudioPlayer = ({ src,id ,reload}) => {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -54,6 +55,19 @@ const CustomAudioPlayer = ({ src }) => {
         setCurrentTime(newTime);
     };
 
+    const handleSongEnd = () => {
+        audioRef.current.currentTime = 0; // Reset to start
+        audioRef.current.play(); // Replay the song
+        setIsPlaying(true); // Update state to reflect the song is playing again
+        // console.log(123);
+        const fetch =async()=>{
+            await listenSongApi(id)
+            reload()
+        }
+        fetch()
+        
+    };
+
     return (
         <div className="audio-player bg-gray-100 rounded-lg p-4 flex flex-col items-center">
             <audio
@@ -61,6 +75,7 @@ const CustomAudioPlayer = ({ src }) => {
                 src={src}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
+                onEnded={handleSongEnd}
             />
             <div className="controls flex items-center space-x-4">
                 <button onClick={togglePlayPause} className="text-blue-500">

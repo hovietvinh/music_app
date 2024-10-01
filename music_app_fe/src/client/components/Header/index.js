@@ -1,5 +1,5 @@
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
-import { HomeOutlined,CustomerServiceOutlined,HeartOutlined } from '@ant-design/icons';
+import { HomeOutlined,CustomerServiceOutlined,HeartOutlined,CloudOutlined } from '@ant-design/icons';
 import { Button, Form, Input, notification } from 'antd';
 import Register from "../../pages/register";
 import { useEffect, useState } from "react";
@@ -98,7 +98,7 @@ function Header() {
                                 
                                 
                                 <NavLink to="/" className={"font-normal text-[16px] text-blue-500 hover:text-blue-800"}><HomeOutlined className="pr-1"/>Trang chủ</NavLink>
-                                <NavLink to="/topics" className={"font-normal text-[16px] text-blue-500 hover:text-blue-800"}><CustomerServiceOutlined className="pr-1"/>Chủ đề</NavLink>
+                                <NavLink to="/topics" className={"font-normal text-[16px] text-blue-500 hover:text-blue-800"}><CloudOutlined className="pr-1"/>Chủ đề</NavLink>
                                 <NavLink to="/favorite-songs" className={"font-normal text-[16px] text-blue-500 hover:text-blue-800"}><HeartOutlined className="pr-1"/>Yêu thích</NavLink>
 
                                 {/* <NavLink className={"font-normal text-[16px] text-blue-500 hover:text-blue-800"}>Liên lạc</NavLink> */}

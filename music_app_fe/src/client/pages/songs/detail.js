@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import "./detail.css";
-import { ClockCircleOutlined,LikeFilled,HeartFilled, AudioFilled, CustomerServiceFilled, LikeOutlined, HeartOutlined } from "@ant-design/icons";
+import { ClockCircleOutlined,TagOutlined,LikeFilled,HeartFilled, AudioFilled, CustomerServiceFilled, LikeOutlined, HeartOutlined } from "@ant-design/icons";
 import {favoriteSongApi, getFavoriteSong, songLikeApi} from "../../../utils/api"
 import { useDispatch, useSelector } from 'react-redux';
 import { getSongDetailAction } from '../../../redux/actions/SongAction';
@@ -57,11 +57,15 @@ function DetailSong() {
     // const stateSong = use
     const [loading, setLoading] = useState(true);
     const [load, setLoad] = useState(true);
+    const reload  =()=>{
+        setLoad(!load)
+    }
     const stateUser = useSelector(state=>state.UserReducer)
     const [isLike,setIsLike] = useState()
     const [favoriteSong,setFavoriteSong] = useState()
     const [isFav,setIsFav] = useState(false)
     // console.log(stateUser);
+    console.log(song);
     useEffect(() => {
 
         const fetch = async()=>{
@@ -83,7 +87,7 @@ function DetailSong() {
         fetch()
         
 
-    }, [slugSong, dispatch,isLike,isFav]);
+    }, [slugSong, dispatch,isLike,isFav,load]);
     // console.log(favoriteSong);
 
     useEffect(() => {
@@ -201,20 +205,21 @@ function DetailSong() {
                         <AudioFilled className='pr-1' /> <span className='font-normal text-gray-600'>{JSON.stringify(song.infoSinger.fullName)}</span>
                     </div>
                     <div>
-                        <CustomerServiceFilled className='pr-1' /> <span className='font-normal text-gray-600'>{JSON.stringify(topic)}</span>
+                        <TagOutlined className='pr-1' /> <span className='font-normal text-gray-600'>{JSON.stringify(topic)}</span>
                     </div>
                     <div>
                    
                         {/* <LikeFilled className=' text-blue-500' /> <span className='font-normal text-blue-600'>{JSON.stringify(song.like.length)} Thích</span> */}
-                        {isLike?
-                        <><LikeFilled className=' text-blue-500' onClick={changeLike} /> <span className='font-normal text-blue-500'>{parseInt(JSON.stringify(song.like.length))} Thích</span> </>
-                         :
-                        <><LikeOutlined onClick={changeLike} className=' text-blue-900' /> <span className='font-normal text-gray-600'>{JSON.stringify(song.like.length)} Thích</span></>}
+                        <CustomerServiceFilled className='pr-1' /> <span className='font-normal text-gray-600'>{JSON.stringify(song.listen) || 0} lượt nghe</span> 
                         
                     </div>
                 </div>
                 
-                <div>
+                <div className='flex items-center gap-3'>
+                    {isLike?
+                        <><LikeFilled className=' text-blue-500 ' onClick={changeLike} /> <span className='font-normal  text-blue-500'>{parseInt(JSON.stringify(song.like.length))} Thích</span> </>
+                         :
+                        <><LikeOutlined onClick={changeLike} className=' text-blue-900' /> <span className='font-normal  text-gray-600'>{JSON.stringify(song.like.length)} Thích</span></>}
                     {isFav?<><HeartFilled className='text-pink-500 pr-1' onClick={changeFav} /> <span onClick={changeFav} className='font-semibold text-pink-500 cursor-pointer'>Bài hát yêu thích</span></>:<><HeartOutlined onClick={changeFav} className='text-pink-400 pr-1' /> <span onClick={changeFav} className='cursor-pointer font-normal text-pink-400'>Thêm vào danh sách bài hát yêu thích</span></>}
                     
                 </div>
@@ -225,7 +230,7 @@ function DetailSong() {
                     </div>
                     <div className='flex-1'>
                         {song.audio ? (
-                           <CustomAudioPlayer src={song.audio} />
+                           <CustomAudioPlayer src={song.audio} reload={reload} id={song._id} />
                         ) : (
                             <p>No audio available</p>
                         )}
