@@ -180,13 +180,13 @@ export const favorite = async (req:Request,res:Response)=>{
             })
             if(favSong){
                 await FavoriteSong.updateOne({userId:newUser._id},{
-                    $addToSet: {songsId:idSong}
+                    $addToSet: {songsId:{_id:idSong}}
                 })
             }
             else{
                 const obj = {
                     userId:newUser._id,
-                    songsId:[idSong]
+                    songsId:[{_id:idSong}]
                 }
                 const newFavSong = new FavoriteSong(obj)
                 await newFavSong.save()
@@ -199,7 +199,7 @@ export const favorite = async (req:Request,res:Response)=>{
             // console.log("unfavorite",idSong);
             await FavoriteSong.updateOne(
                 { userId: newUser._id }, 
-                { $pull: { songsId: idSong } } 
+                { $pull: { songsId: {_id:idSong} } } 
             );
             
             

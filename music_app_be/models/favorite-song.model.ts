@@ -2,10 +2,11 @@ import mongoose from 'mongoose';
 
 const favoriteSongSchema = new mongoose.Schema({
     userId:String,
-    songsId:{
-        type:[String],
-        default:[]
-    },
+    songsId:[
+        {
+            _id:String,
+        }
+    ],
     deleted:{
         type:Boolean,
         default:false

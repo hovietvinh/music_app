@@ -71,7 +71,9 @@ function DetailSong() {
                 const res = await getFavoriteSong();
                 // console.log(res);
                 if(res.code==200 && res.data){
+                    // console.log(res);
                     setFavoriteSong(res.data.songsId)
+                    // console.log(res.data.songsId);
                     // const fav = res.data.songsId.find(item=>item==stateUser.userInfo._id)
                 }
             }
@@ -82,6 +84,7 @@ function DetailSong() {
         
 
     }, [slugSong, dispatch,isLike,isFav]);
+    // console.log(favoriteSong);
 
     useEffect(() => {
         if (songs.length > 0) {
@@ -103,7 +106,7 @@ function DetailSong() {
         
             //check fav
             if(favoriteSong){
-                const fav = favoriteSong.find(item=>item==songs[0]._id)
+                const fav = favoriteSong.find(item=>item._id==songs[0]._id)
                 if(fav){
                     setIsFav(true)
                 }
