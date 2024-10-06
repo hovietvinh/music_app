@@ -191,6 +191,7 @@ function DetailSong() {
     if (!song) {
         return <Empty description="Không có dữ liệu" />;
     }
+    console.log(song);
 
     return (
         <div className='container max-w-[80%] mx-auto'>

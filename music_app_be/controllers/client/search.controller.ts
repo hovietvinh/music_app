@@ -20,7 +20,8 @@ export const result = async(req: Request,res: Response)=>{
                 $or:[
                     {title:keywordRegex},
                     {slug:slugRegex}
-                ]
+                ],
+                status:"active"
             })
         
 

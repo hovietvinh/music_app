@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import * as database from "./config/database"
 import cors from "cors"
 import clientRoutes from "./routes/client/index.route"
+import adminRoutes from "./routes/admin/index.route"
 dotenv.config()
 database.connect();
 
@@ -16,6 +17,7 @@ app.use(cors())
 
 
 clientRoutes(app)
+adminRoutes(app)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
