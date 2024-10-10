@@ -12,6 +12,7 @@ import LoginAdmin from "../admin/pages/Login/index"
 import { Navigate } from "react-router-dom";
 import SongsAdmin from "../admin/pages/Songs/index"
 import CreateSong from "../admin/pages/Songs/create";
+import SongDetail from "../admin/pages/Songs/detail";
 export const routes = [
     {
         path:"/",
@@ -72,6 +73,10 @@ export const routes = [
             {
                 path:"songs/create",
                 element:<CreateSong/>
+            },
+            {
+                path:"songs/detail/:id",
+                element:<SongDetail/>
             }
         ]
 

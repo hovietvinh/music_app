@@ -25,6 +25,7 @@ export const index = async(req: Request,res: Response)=>{
             })
 
             let newSong = {
+                _id:song._id,
                 title:song.title,
                 avatar:song.avatar,
                 description:song.description,
@@ -32,7 +33,7 @@ export const index = async(req: Request,res: Response)=>{
                 topicId:song.topicId,
                 like:song.like,
                 listen:song.listen,
-                lyris:song.lyris,
+                lyrics:song.lyrics,
                 audio:song.audio,
                 status:song.status,
                 slug:song.slug,
@@ -138,6 +139,55 @@ export const createPost = async(req: Request,res: Response)=>{
        })
         
     }catch(e){
+        res.json({
+            code:400,
+            message:"Truy cập database thất bại"
+        })
+    }
+}
+
+//[GET] /api/admin/songs/detail/:id
+export const getDetail = async(req: Request,res: Response)=>{
+    try {
+        const find = {
+            deleted:false,
+            _id:req.params.id
+        }
+        const song = await Song.findOne(find);
+        const singer = await Singer.findOne({
+            _id:song.singerId
+        })
+        const topic = await Topic.findOne({
+            _id:song.topicId
+        })
+
+        const newData = {
+            _id:song._id,
+            infoSinger:singer,
+            infoTopic:topic,
+            title:song.title,
+            avatar:song.avatar,
+            description:song.description,
+            singerId:song.singerId,
+            topicId:song.topicId,
+            like: song.like,
+            listen:song.listen,
+            lyrics:song.lyrics,
+            audio:song.audio,
+            status:song.status,
+            slug:song.slug
+        }
+      
+        
+
+   
+
+        res.json({
+            code:200,
+            data:newData
+        });
+
+    } catch (error) {
         res.json({
             code:400,
             message:"Truy cập database thất bại"

@@ -96,7 +96,7 @@ function Songs() {
                     >
                         Xóa
                     </Button>
-                    <NavLink to={`/admin/products/detail/${record._id}`} className="bg-gray-400 p-2 px-3 text-white rounded-md">Chi tiết</NavLink>
+                    <NavLink to={`/admin/songs/detail/${record._id}`} className="bg-gray-400 p-2 px-3 text-white rounded-md">Chi tiết</NavLink>
 
                     
                 </Space>
@@ -128,6 +128,7 @@ function Songs() {
                                 boxSizing: 'border-box',
                                 fontWeight: '300'
                             }}
+                            classNames="shadow-md"
                         >
                             <div className='flex justify-end'>
                                 <NavLink to="/admin/songs/create" >

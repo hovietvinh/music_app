@@ -38,7 +38,7 @@ export const result = async(req: Request,res: Response)=>{
                     singerId:item.singerId,
                     topicId:item.topicId,
                     like: item.like,
-                    lyris:item.lyris,
+                    lyrics:item.lyrics,
                     audio:item.audio,
                     status:item.status,
                     slug:item.slug,

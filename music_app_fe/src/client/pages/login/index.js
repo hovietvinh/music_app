@@ -14,8 +14,10 @@ function Login() {
   const [form] = Form.useForm();
   // const stateUser = useSelector(state=>state.UserReducer)
   const login = async(e)=>{
+    
         const res = await dispatch(loginUserAction(e))
-        if(res.code==200){
+        console.log(res);
+        if( res &&res.code==200){
             console.log(res);
           navigate("/") 
           

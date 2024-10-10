@@ -94,12 +94,28 @@ const getDataCreateSongApi = async()=>{
     
 }
 
+const getSongByIdApi = async(id)=>{
+    try {
+        const URL_LOGIN =`/api/admin/songs/detail/${id}`
+       
+        const response = await axios.get(URL_LOGIN)
+        return response
+    } catch (error) {
+        return {
+            code:400,
+            message:"Truy cập database API thất bại "
+        }
+    }
+    
+}
+
 export {
     getTopicsAdminApi,
     accountCheckApi,
     accountLoginApi,
     getSongsApi,
     getDataCreateSongApi,
-    createSongsApi
+    createSongsApi,
+    getSongByIdApi
 
 }

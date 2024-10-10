@@ -16,7 +16,7 @@ const songScheme = new mongoose.Schema({
         type:Number,
         default:0
     },
-    lyris:String,
+    lyrics:String,
     audio:String,
     status:String,
     slug:{

@@ -63,8 +63,7 @@ const CustomAudioPlayer = ({ src}) => {
                 ref={audioRef}
                 src={src}
                 onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-                
+                onLoadedMetadata={handleLoadedMetadata}          
             />
             <div className="controls flex items-center space-x-4">
                 <button onClick={togglePlayPause} className="text-blue-500">

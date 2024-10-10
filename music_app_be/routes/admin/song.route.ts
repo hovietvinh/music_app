@@ -9,6 +9,7 @@ const upload = multer()
 
 router.get("/",controller.index)
 router.get("/create",controller.create)
+router.get("/detail/:id",controller.getDetail)
 router.post("/create",upload.fields([
     {name:"avatar",maxCount:1},
     {name:"audio",maxCount:1},
