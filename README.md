@@ -22,3 +22,6 @@ JWT_EXPIRE= 1d
 - Mở terminal , chạy câu lệnh : **npm i**(Nếu ở lần chạy đầu tiên) sau đó chạy **npm start**
 
 
+### Tài khoản admin
+- hovietvinh29032004@gmail.com 
+- admin123
