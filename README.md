@@ -21,7 +21,7 @@ JWT_EXPIRE= 1d
 - Vào folder music_app_fe
 - Mở terminal , chạy câu lệnh : **npm i**(Nếu ở lần chạy đầu tiên) sau đó chạy **npm start**
 
-### Bạn nên chạy npm start ở be trước tiên rồi mới đến fe để post của be là 3000 và fe là 3001
+### Bạn nên chạy npm start ở be trước tiên rồi mới đến fe để port của be là 3000 và fe là 3001
 
 ### Tài khoản admin
 - hovietvinh29032004@gmail.com 
